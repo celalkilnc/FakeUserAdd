@@ -17,6 +17,7 @@ namespace FakeDataAdd_DB
         public Form1()
         {
             InitializeComponent();
+            textBox1.Focus();
             schools.Add("Akdeniz Üni.");
             schools.Add("Ege Üni.");
             schools.Add("Pamukkale Üni.");
@@ -31,8 +32,9 @@ namespace FakeDataAdd_DB
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
+            int num = Convert.ToInt32(textBox1.Text);
             Random random = new Random();
-            for (int i = 0; i < 400; i++)
+            for (int i = 0; i < num; i++)
             {
                 #region values
                 int id = db.idCreator();
@@ -45,13 +47,12 @@ namespace FakeDataAdd_DB
 
                 db.AddUserDB(id, name, surname, school, email, password);
             }
-
-
+            MessageBox.Show("Eklendi");
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
-
+            e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
     }
 }
