@@ -47,6 +47,7 @@ namespace FakeDataAdd_DB
             }
             return 0;
         }
+
         private bool idControl(int id)
         {
             SqlCommand tblschlcommand = new SqlCommand("Select UserID From TblUsers", connection);

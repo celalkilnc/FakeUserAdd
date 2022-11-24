@@ -32,22 +32,27 @@ namespace FakeDataAdd_DB
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            int num = Convert.ToInt32(textBox1.Text);
-            Random random = new Random();
-            for (int i = 0; i < num; i++)
+            try
             {
-                #region values
-                int id = db.idCreator();
-                string name = FakeData.NameData.GetFirstName();
-                string surname = FakeData.NameData.GetSurname();
-                string school = schools[random.Next(0, (schools.Count))];
-                string email = FakeData.NetworkData.GetEmail(name, surname);
-                string password = "123";
-                #endregion
+                int num = Convert.ToInt32(textBox1.Text);
+                Random random = new Random();
 
-                db.AddUserDB(id, name, surname, school, email, password);
+                for (int i = 0; i < num; i++)
+                {
+                    #region values
+                    int id = db.idCreator();
+                    string name = FakeData.NameData.GetFirstName();
+                    string surname = FakeData.NameData.GetSurname();
+                    string school = schools[random.Next(0, (schools.Count))];
+                    string email = FakeData.NetworkData.GetEmail(name, surname);
+                    string password = "123";
+                    #endregion
+
+                    db.AddUserDB(id, name, surname, school, email, password);
+                }
+                MessageBox.Show("Eklendi");
             }
-            MessageBox.Show("Eklendi");
+            catch(Exception ex) { MessageBox.Show(ex.Message); }
         }
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
