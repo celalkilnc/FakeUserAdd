@@ -35,15 +35,12 @@ namespace FakeDataAdd_DB
         public int idCreator()
         {
             Random random = new Random();
-            int id;
-            bool ctrl = false;
+            int id; bool ctrl = false;
+
             while (ctrl)
             {
                 id = random.Next(1000000, 9999999);
-                if (!idControl(id))
-                {
-                    return id;
-                }
+                if (!idControl(id)) { return id; }
             }
             return 0;
         }

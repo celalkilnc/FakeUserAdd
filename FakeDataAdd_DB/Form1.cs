@@ -18,6 +18,8 @@ namespace FakeDataAdd_DB
         {
             InitializeComponent();
             textBox1.Focus();
+
+            #region School Values
             schools.Add("Akdeniz Üni.");
             schools.Add("Ege Üni.");
             schools.Add("Pamukkale Üni.");
@@ -28,6 +30,7 @@ namespace FakeDataAdd_DB
             schools.Add("Yıldız Teknik Üni.");
             schools.Add("Hacettepe Üni.");
             schools.Add("Özyeğin Üni.");
+            #endregion
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
