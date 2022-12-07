@@ -13,25 +13,16 @@ namespace FakeDataAdd_DB
     {
         const string connectionString = @"Data Source=LAPTOP-60OVNJGF;Initial Catalog=LibraryTest;Integrated Security=True";
         static SqlConnection connection = new SqlConnection(connectionString);
-        static SqlCommand command;
 
         public void AddUserDB(int id, string name, string surname, string schoolname, string email, string password)
         {
-            command = new SqlCommand(@"INSERT INTO tblUsers(UserID,UserName,UserSurname,refSchoolID,UserEmail,UserPassword) VALUES (@id,@name,@surname,@schoolId,@email,@password)", connection);
-
-            #region commands
-            command.Parameters.AddWithValue("@id", id);
-            command.Parameters.AddWithValue("@name", name);
-            command.Parameters.AddWithValue("@surname", surname);
-            command.Parameters.AddWithValue("@schoolId", schoolname);//Düzeltme : 'refSchoolID' int(id) değil 'okul adı'(string) alır
-            command.Parameters.AddWithValue("@email", email);
-            command.Parameters.AddWithValue("@password", password);
-            #endregion
+            string commandStr = $"INSERT INTO tblUsers(UserID,UserName,UserSurname,refSchoolID,UserEmail,UserPassword) VALUES ({id},{name},{surname},{schoolname},{email},{password})";
 
             connection.Open();
-            command.ExecuteNonQuery();
+            ReturnCommand(commandStr, connection, CommandTypeActive: false).ExecuteNonQuery();
             connection.Close();
         }
+
         public int idCreator()
         {
             Random random = new Random();
@@ -47,12 +38,11 @@ namespace FakeDataAdd_DB
 
         private bool idControl(int id)
         {
-            SqlCommand tblschlcommand = new SqlCommand("Select UserID From TblUsers", connection);
-            tblschlcommand.CommandType = CommandType.Text;
             SqlDataReader reader;
 
             connection.Open();
-            reader = tblschlcommand.ExecuteReader();
+            reader = ReturnCommand("Select UserID From TblUsers",connection,true).ExecuteReader();
+
             while (reader.Read())
             {
                 if (id == Convert.ToInt32(reader["UserID"]))
@@ -62,7 +52,16 @@ namespace FakeDataAdd_DB
                 }
             }
             connection.Close();
+            
             return false;
+        }
+
+        private SqlCommand ReturnCommand(string CommandString, SqlConnection connection ,bool CommandTypeActive)
+        {
+            SqlCommand cmd = new SqlCommand(CommandString, connection);
+            if (CommandTypeActive) { cmd.CommandType = CommandType.Text; }
+            
+            return cmd;
         }
     }
 }
