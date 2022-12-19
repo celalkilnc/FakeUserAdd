@@ -11,7 +11,7 @@ namespace FakeDataAdd_DB
 {
     internal class Database
     {
-        const string connectionString = @"Data Source=LAPTOP-60OVNJGF;Initial Catalog=LibraryTest;Integrated Security=True";
+        const string connectionString = "ConnectionString";
         static SqlConnection connection = new SqlConnection(connectionString);
 
         public void AddUserDB(int id, string name, string surname, string schoolname, string email, string password)
